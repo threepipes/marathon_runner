@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  redis:
+    image: redis
+  worker:
+    image: marathon-worker
+    build: worker
+    depends_on:
+      - redis
+    environment:
+      RQ_REDIS_URL: redis://redis
+    volumes:
+      - ./worker/:/app/
+  cacher:
+    image: marathon-worker
+    depends_on:
+      - worker
+    environment:
+      RQ_REDIS_URL: redis://redis
+    volumes:
+      - ./worker/:/app/
+    command: python catcher.py
+  # test:
+  #   image: marathon-test
+  #   build: test
+  #   depends_on:
+  #     - worker
+  #   environment:
+  #     RQ_REDIS_URL: redis://redis
+  #   volumes:
+  #     - ./test/:/app/
