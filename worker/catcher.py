@@ -14,11 +14,12 @@ logger = getLogger(__name__)
 logger.addHandler(StreamHandler())
 logger.setLevel(DEBUG)
 
-
+# TODO: read from settings
 NEW_FILE_DIR = 'data/'
 TARGET_DIR = 'archive/'
-EXEC_COMMAND = 'node'
+EXEC_COMMAND = 'node' # TODO: set by args or file ext
 SLEEP_TIME = 5
+
 
 def catcher(filename: str):
     logger.info('catch: ' + filename)
@@ -40,10 +41,8 @@ def catcher(filename: str):
 
 def check_update() -> str:
     path_list = os.listdir(NEW_FILE_DIR)
-    if len(path_list) > 0:
-        return path_list[0]
-    else:
-        return ''
+    return path_list[0] if len(path_list) > 0 else ''
+
 
 def main():
     while True:
@@ -57,6 +56,7 @@ def main():
             break
         except Exception as e:
             logger.error(e)
+
 
 if __name__ == '__main__':
     main()

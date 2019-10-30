@@ -1,6 +1,7 @@
 /**/__pycache__/
 
-Dockerfile
-*.db
 /data/
 /archive/
+
+Dockerfile
+*.db

@@ -11,6 +11,7 @@ logger = getLogger(__name__)
 logger.addHandler(StreamHandler())
 logger.setLevel(DEBUG)
 
+# TODO: read db/table from settings
 DB = '/app/test.db'
 TABLE = 'worker'
 REDIS_URL = os.getenv('RQ_REDIS_URL')
@@ -19,6 +20,7 @@ REDIS_URL = os.getenv('RQ_REDIS_URL')
 def save_score(idx: int, i: int, score: int, label: str):
     con = sqlite3.connect(DB)
     cur = con.cursor()
+    # TODO: read scheme from settings
     sql = f"""
         insert into {TABLE} (id, label, num, result, create_datetime)
             values ({idx}, '{label}', {i}, {score}, datetime('now', 'localtime'))
