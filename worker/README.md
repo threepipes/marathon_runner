@@ -14,7 +14,7 @@ mkdir data
 ```
 
 ```
-docker-compose up --scale worker=4
+docker-compose up catcher --scale worker=4
 ```
 
 # 動作

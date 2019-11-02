@@ -7,6 +7,7 @@ import time
 import datetime
 import shutil
 from logging import getLogger, DEBUG, StreamHandler
+from configparser import ConfigParser
 
 import runner
 
@@ -14,11 +15,15 @@ logger = getLogger(__name__)
 logger.addHandler(StreamHandler())
 logger.setLevel(DEBUG)
 
-# TODO: read from settings
-NEW_FILE_DIR = 'data/'
-TARGET_DIR = 'archive/'
+config = ConfigParser()
+config.read('settings.cfg')
+
+catcher_configs = config.get('catcher', {})
+NEW_FILE_DIR = catcher_configs.get('input_file_dir', '')
+TARGET_DIR = catcher_configs.get('archive_file_dir', '')
+SLEEP_TIME = int(catcher_configs.get('sleep_time', 5))
+
 EXEC_COMMAND = 'node' # TODO: set by args or file ext
-SLEEP_TIME = 5
 
 
 def catcher(filename: str):

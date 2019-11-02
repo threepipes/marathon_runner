@@ -11,7 +11,7 @@ services:
     environment:
       RQ_REDIS_URL: redis://redis
     volumes:
-      - ./worker/:/app/
+      - ./worker/:/app/worker/
   cacher:
     image: marathon-worker
     depends_on:
@@ -19,14 +19,14 @@ services:
     environment:
       RQ_REDIS_URL: redis://redis
     volumes:
-      - ./worker/:/app/
+      - ./worker/:/app/worker/
     command: python catcher.py
-  # test:
-  #   image: marathon-test
-  #   build: test
+  # optimizer:
+  #   image: marathon-optimizer
+  #   build: optimizer
   #   depends_on:
   #     - worker
   #   environment:
   #     RQ_REDIS_URL: redis://redis
   #   volumes:
-  #     - ./test/:/app/
+  #     - ./worker/:/app/worker/
